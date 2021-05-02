@@ -1,15 +1,19 @@
 package model;
 
+import lombok.SneakyThrows;
+
 import java.io.Serializable;
 
 public class Quote implements Serializable {
     private long id;
     private String text;
     private QuoteLength quoteLength;
-    private  static final long serialVersionUID = 21L;
+    private static final long serialVersionUID = 21L;
 
+    @SneakyThrows
     public Quote() {
         id = System.nanoTime();
+        Thread.sleep(1000);
     }
 
     public void setQuoteLength() {

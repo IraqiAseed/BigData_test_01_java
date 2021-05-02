@@ -3,9 +3,6 @@ package model;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,44 +10,44 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.mockito.Mockito.doAnswer;
 
 
 public class QuoteProducerTest {
 
-    @Test
-    public void getQuote() {
-        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
-        Quote q = new Quote();
-        q.setText("Hello");
-        q.setId(5);
-
-        Assert.assertEquals(q,quoteFromProducer);
-    }
 
     @Test
     public void testQuoteText() {
-        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
-        Assert.assertEquals("Hello",quoteFromProducer.getText());
+        Quote quoteFromProducer = QuoteProducer.builder().text("Hello").id(5).build().getQuote();
+        Assert.assertEquals("Hello", quoteFromProducer.getText());
     }
 
     @Test
     public void testQuoteId() {
-        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
-        Assert.assertEquals(5,quoteFromProducer.getId());
+        Quote quoteFromProducer = QuoteProducer.builder().text("Hello").id(5).build().getQuote();
+        Assert.assertEquals(5, quoteFromProducer.getId());
     }
+
     @Test
     public void testQuoteLength() {
-        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
-        Assert.assertEquals(QuoteLength.SHORT,quoteFromProducer.getQuoteLength());
+        Quote quoteFromProducer = QuoteProducer.builder().text("Hello").id(5).build().getQuote();
+        Assert.assertEquals(QuoteLength.SHORT, quoteFromProducer.getQuoteLength());
     }
 
     @Test
     public void listOfQuotesInData() {
-    List<String> list = QuoteProducer.produce();
-    Assert.assertTrue(list.size() != 0);
+        List<String> list = QuoteProducer.produce();
+        Assert.assertTrue(list.size() != 0);
     }
 
+    @Test
+    public void getQuote() {
+        Quote quoteFromProducer = QuoteProducer.builder().text("Hello").id(5).build().getQuote();
+        Quote q = new Quote();
+        q.setText("Hello");
+        q.setId(5);
+
+        Assert.assertEquals(q, quoteFromProducer);
+    }
 
     @Test
     @SneakyThrows
@@ -63,9 +60,9 @@ public class QuoteProducerTest {
         int oldSize = filesOld.size();
 
         for (String s : list) {
-            QuoteProducer.builder().setText(s).build().createQuoteFile();
+            QuoteProducer.builder().text(s).build().createQuoteFile();
 
-            Thread.sleep(1000);
+
         }
 
         List<File> filesNew = Files.list(Paths.get("Quotes"))
@@ -73,10 +70,8 @@ public class QuoteProducerTest {
                 .collect(Collectors.toList());
         int newSize = filesNew.size();
         Thread.sleep(1000);
-        Assert.assertEquals(oldSize+list.size(),newSize);
+        Assert.assertEquals(oldSize + list.size(), newSize);
     }
-
-
 
 
 }

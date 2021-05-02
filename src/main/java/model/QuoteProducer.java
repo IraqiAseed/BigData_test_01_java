@@ -13,12 +13,12 @@ public class QuoteProducer {
 
     private Quote quote;
 
-    QuoteProducer(QuoteProducerBuilder quoteProducerBuilder)
-    {
+    QuoteProducer(QuoteProducerBuilder quoteProducerBuilder) {
         quote = quoteProducerBuilder.quote;
     }
 
-    public QuoteProducer() { }
+    public QuoteProducer() {
+    }
 
     public static QuoteProducerBuilder builder() {
         return new QuoteProducerBuilder();
@@ -26,46 +26,45 @@ public class QuoteProducer {
 
     @SneakyThrows
     public static List<String> produce() {
-        BufferedReader reader = new BufferedReader(new FileReader("Data/quotes.txt"));
-
+        BufferedReader reader = new BufferedReader(new FileReader("data/quotes.txt"));
         List<String> list = reader.lines()
                 .map(String::toUpperCase)
                 .peek(System.out::println)
                 .collect(Collectors.toList());
-
         System.out.println(list);
-
         return list;
     }
-    public Quote getQuote()
-    {
+
+    public Quote getQuote() {
         return quote;
     }
 
     @SneakyThrows
-    public void createQuoteFile()
-    {
+    public File createQuoteFile() {
         LocalDateTime localDateTimeNow = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HHmmss");
         String formatDateTime = localDateTimeNow.format(format);
         String fileName = formatDateTime + ".obj";
 
-        File directory = new File("Quotes");
+        File directory = new File("quotes");
         directory.mkdir();
-        File file = new File("Quotes", fileName);
 
-        if (file.exists()) {
-            file.delete();
+        if(directory.exists()) {
+            File file = new File("quotes", fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(quote);
+
+            fos.close();
+            oos.close();
+            return file;
         }
-        file.createNewFile();
 
-        FileOutputStream fos = new FileOutputStream(file);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(quote);
-
-        fos.close();
-        oos.close();
-
+        return null;
     }
 
 
@@ -77,19 +76,21 @@ public class QuoteProducer {
         }
 
         public QuoteProducerBuilder quote(Quote quote) {
-            this.quote =quote;
+            this.quote = quote;
             return this;
         }
 
-        public QuoteProducerBuilder setText(@NonNull String text) {
+        public QuoteProducerBuilder text(@NonNull String text) {
             this.quote.setText(text);
             quote.setQuoteLength();
             return this;
         }
-        public QuoteProducerBuilder setId(long id) {
+
+        public QuoteProducerBuilder id(long id) {
             this.quote.setId(id);
             return this;
         }
+
         public QuoteProducerBuilder setLength() {
             quote.setQuoteLength();
             return this;
