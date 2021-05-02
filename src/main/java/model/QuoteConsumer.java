@@ -18,21 +18,6 @@ public class QuoteConsumer {
     QuoteConsumer() {
 
     }
-    @SneakyThrows
-    public void handleQuotes ()
-    {
-        List<File> files = Files.list(Paths.get("Quotes"))
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-
-        for (File file : files) {
-
-            Quote quote = readQuote(file);
-
-            if(quote != null)
-                writeJsonFile(quote);
-        }
-    }
 
 
     @SneakyThrows
@@ -62,6 +47,8 @@ public class QuoteConsumer {
             System.out.println(q);
 
 
+            fis.close();
+            ois.close();
         return q;
     }
 

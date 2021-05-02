@@ -47,6 +47,7 @@ public class QuoteProducer {
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(quote);
 
+        fos.close();
         oos.close();
 
     }

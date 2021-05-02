@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-//@Builder
 public class Quote implements Serializable {
     private long id;
     private String text;
