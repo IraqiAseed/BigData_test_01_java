@@ -92,7 +92,8 @@ public class QuoteProducer {
         }
 
         public QuoteProducerBuilder setLength() {
-            quote.setQuoteLength();
+            if(quote.getText() != null)
+                quote.setQuoteLength();
             return this;
         }
 

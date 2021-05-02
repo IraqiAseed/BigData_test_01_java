@@ -61,9 +61,7 @@ public class QuoteProducerTest {
 
         for (String s : list) {
             QuoteProducer.builder().text(s).build().createQuoteFile();
-
-
-        }
+       }
 
         List<File> filesNew = Files.list(Paths.get("Quotes"))
                 .map(Path::toFile)
