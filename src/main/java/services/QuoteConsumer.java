@@ -1,6 +1,7 @@
-package model;
+package services;
 
 import lombok.SneakyThrows;
+import model.Quote;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class QuoteConsumer {
 
-    QuoteConsumer() {
+    public QuoteConsumer() {
     }
 
 

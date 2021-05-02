@@ -1,8 +1,12 @@
-package model;
+package repo;
 
 import lombok.SneakyThrows;
+import model.Quote;
+import model.QuoteLength;
 import org.junit.Assert;
 import org.junit.Test;
+import repo.QuoteProducer;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;

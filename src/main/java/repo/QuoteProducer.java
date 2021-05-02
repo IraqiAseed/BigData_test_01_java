@@ -1,7 +1,8 @@
-package model;
+package repo;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import model.Quote;
 
 import java.io.*;
 import java.time.LocalDateTime;

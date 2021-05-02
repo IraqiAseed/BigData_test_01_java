@@ -1,14 +1,14 @@
-package model;
+package services;
 
 import lombok.SneakyThrows;
+import model.Quote;
+import model.QuoteLength;
 import org.junit.Assert;
 import org.junit.Test;
+import repo.QuoteProducer;
+import services.QuoteConsumer;
 
-import java.io.Console;
 import java.io.File;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class QuoteConsumerTest {
 
