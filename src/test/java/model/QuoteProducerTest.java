@@ -18,6 +18,32 @@ import static org.mockito.Mockito.doAnswer;
 
 public class QuoteProducerTest {
 
+    @Test
+    public void getQuote() {
+        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
+        Quote q = new Quote();
+        q.setText("Hello");
+        q.setId(5);
+
+        Assert.assertEquals(q,quoteFromProducer);
+    }
+
+    @Test
+    public void testQuoteText() {
+        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
+        Assert.assertEquals("Hello",quoteFromProducer.getText());
+    }
+
+    @Test
+    public void testQuoteId() {
+        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
+        Assert.assertEquals(5,quoteFromProducer.getId());
+    }
+    @Test
+    public void testQuoteLength() {
+        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
+        Assert.assertEquals(QuoteLength.SHORT,quoteFromProducer.getQuoteLength());
+    }
 
     @Test
     public void listOfQuotesInData() {
@@ -50,15 +76,7 @@ public class QuoteProducerTest {
         Assert.assertEquals(oldSize+list.size(),newSize);
     }
 
-    @Test
-    public void getQuote() {
-        Quote quoteFromProducer = QuoteProducer.builder().setText("Hello").setId(5).build().getQuote();
-        Quote q = new Quote();
-        q.setText("Hello");
-        q.setId(5);
 
-        Assert.assertEquals(q,quoteFromProducer);
-    }
 
 
 }

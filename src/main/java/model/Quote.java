@@ -12,9 +12,12 @@ public class Quote implements Serializable {
         id = System.nanoTime();
     }
 
-    public String toString() {
-        String var10000 = this.getText();
-        return "Quote(text=" + var10000 + ", quoteLength=" + this.getQuoteLength() + ", id=" + this.id +")";
+    public void setQuoteLength() {
+        this.quoteLength = QuoteLength.handleLength(text.length());
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof Quote;
     }
 
     public long getId() {
@@ -36,11 +39,10 @@ public class Quote implements Serializable {
     public void setText(String text) {
         this.text = text;
         setQuoteLength();
-
     }
 
-    public void setQuoteLength() {
-        this.quoteLength = QuoteLength.handleLength(text.length());
+    public void setQuoteLength(QuoteLength quoteLength) {
+        this.quoteLength = quoteLength;
     }
 
     public boolean equals(final Object o) {
@@ -59,10 +61,6 @@ public class Quote implements Serializable {
         return true;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof Quote;
-    }
-
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
@@ -73,5 +71,9 @@ public class Quote implements Serializable {
         final Object $quoteLength = this.getQuoteLength();
         result = result * PRIME + ($quoteLength == null ? 43 : $quoteLength.hashCode());
         return result;
+    }
+
+    public String toString() {
+        return "Quote(id=" + this.getId() + ", text=" + this.getText() + ", quoteLength=" + this.getQuoteLength() + ")";
     }
 }
