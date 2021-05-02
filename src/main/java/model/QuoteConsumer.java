@@ -15,9 +15,7 @@ import java.util.stream.Collectors;
 
 public class QuoteConsumer {
 
-    QuoteConsumer() {
-
-    }
+    QuoteConsumer() { }
 
 
     @SneakyThrows
@@ -35,7 +33,6 @@ public class QuoteConsumer {
 
         }
     }
-
 
     @SneakyThrows
     public Quote readQuote(File file)

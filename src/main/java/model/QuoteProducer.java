@@ -1,12 +1,13 @@
 package model;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class QuoteProducer {
 
@@ -17,17 +18,32 @@ public class QuoteProducer {
         quote = quoteProducerBuilder.quote;
     }
 
+    public QuoteProducer() { }
+
     public static QuoteProducerBuilder builder() {
         return new QuoteProducerBuilder();
     }
 
+    @SneakyThrows
+    public static List<String> produce() {
+        BufferedReader reader = new BufferedReader(new FileReader("Data/quotes.txt"));
+
+        List<String> list = reader.lines()
+                .map(String::toUpperCase)
+                .peek(System.out::println)
+                .collect(Collectors.toList());
+
+        System.out.println(list);
+
+        return list;
+    }
     public Quote getQuote()
     {
         return quote;
     }
 
     @SneakyThrows
-    public void createQuoteFile(Quote quote)
+    public void createQuoteFile()
     {
         LocalDateTime localDateTimeNow = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HHmmss");
@@ -65,8 +81,9 @@ public class QuoteProducer {
             return this;
         }
 
-        public QuoteProducerBuilder setText(String text) {
+        public QuoteProducerBuilder setText(@NonNull String text) {
             this.quote.setText(text);
+            quote.setQuoteLength();
             return this;
         }
         public QuoteProducerBuilder setId(long id) {
@@ -74,7 +91,7 @@ public class QuoteProducer {
             return this;
         }
         public QuoteProducerBuilder setLength() {
-            quote.setQuoteLength(QuoteLength.handleLength(quote.getText().length()));
+            quote.setQuoteLength();
             return this;
         }
 
@@ -89,15 +106,9 @@ public class QuoteProducer {
 
     }
 
+    @SneakyThrows
     public static void main(String[] args) {
-        QuoteProducer testMiddleName = QuoteProducer.builder().setText("Hello World!").setId(3).setLength().build();
-        testMiddleName.createQuoteFile(testMiddleName.getQuote());
-
-        QuoteProducer testShortName = QuoteProducer.builder().setText("Hell").setId(99).setLength().build();
-        testShortName.createQuoteFile(testShortName.getQuote());
-
-        QuoteProducer testLongName = QuoteProducer.builder().setText("" +
-                "Hello World!Hello World World!Hello World!Hello World!Hello World!").setId(54).setLength().build();
-        testLongName.createQuoteFile(testLongName.getQuote());
+        QuoteProducer qp = new QuoteProducer();
+        qp.produce();
     }
 }
