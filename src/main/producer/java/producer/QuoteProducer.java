@@ -1,4 +1,4 @@
-package repo;
+package producer;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -111,7 +111,11 @@ public class QuoteProducer {
 
     @SneakyThrows
     public static void main(String[] args) {
-        QuoteProducer qp = new QuoteProducer();
-        qp.produce();
+
+        List<String> lst = QuoteProducer.produce();
+        for (String s : lst) {
+            QuoteProducer.builder().text(s).build().createQuoteFile();
+        }
+
     }
 }

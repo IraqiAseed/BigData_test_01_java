@@ -1,12 +1,11 @@
-package services;
+package consumer;
 
 import lombok.SneakyThrows;
 import model.Quote;
 import model.QuoteLength;
 import org.junit.Assert;
 import org.junit.Test;
-import repo.QuoteProducer;
-import services.QuoteConsumer;
+import producer.*;
 
 import java.io.File;
 

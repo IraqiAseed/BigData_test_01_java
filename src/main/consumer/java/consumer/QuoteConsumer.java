@@ -1,4 +1,4 @@
-package services;
+package consumer;
 
 import lombok.SneakyThrows;
 import model.Quote;

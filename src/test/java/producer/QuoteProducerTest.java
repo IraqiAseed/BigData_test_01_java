@@ -1,14 +1,14 @@
-package repo;
+package producer;
 
 import lombok.SneakyThrows;
 import model.Quote;
 import model.QuoteLength;
 import org.junit.Assert;
 import org.junit.Test;
-import repo.QuoteProducer;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 
 public class QuoteProducerTest {
+
 
 
     @Test
@@ -58,16 +59,21 @@ public class QuoteProducerTest {
     public void checkIfNewFilesAdded() {
 
         List<String> list = QuoteProducer.produce();
-        List<File> filesOld = Files.list(Paths.get("Quotes"))
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-        int oldSize = filesOld.size();
-
+        int oldSize = 0;
+        try {
+            List<File> filesOld = Files.list(Paths.get("quotes"))
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
+            oldSize = filesOld.size();
+        }catch(NoSuchFileException e)
+        {
+            System.out.println("quotes folder not found .. ");
+        }
         for (String s : list) {
             QuoteProducer.builder().text(s).build().createQuoteFile();
        }
 
-        List<File> filesNew = Files.list(Paths.get("Quotes"))
+        List<File> filesNew = Files.list(Paths.get("quotes"))
                 .map(Path::toFile)
                 .collect(Collectors.toList());
         int newSize = filesNew.size();
