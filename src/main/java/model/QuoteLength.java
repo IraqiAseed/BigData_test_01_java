@@ -1,7 +1,7 @@
 package model;
 
 public enum QuoteLength {
-    LONG(21, 100), MIDDLE(11, 20), SHORT(0, 10);
+    LONG(21, Integer.MAX_VALUE), MIDDLE(11, 20), SHORT(0, 10);
 
     private int min;
     private int max;
@@ -19,6 +19,6 @@ public enum QuoteLength {
                 return status;
             }
         }
-        throw new IllegalStateException(length + " length is not supported for now");
+        throw new IllegalStateException(length + " Invalid length !!!");
     }
 }
